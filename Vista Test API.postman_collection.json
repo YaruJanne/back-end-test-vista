@@ -1,0 +1,348 @@
+{
+  "info": {
+    "_postman_id": "ac890814-56b3-4c2d-80dd-4c3a887f1ca2",
+    "name": "Vista Test API",
+    "description": "## Vista Technical Test – Backend API\n\nREST API for managing companies and their services.  \nBuilt with Node.js, TypeScript, Express, Prisma and MySQL.\n\n### Getting started\n\n1. Run the backend (see README.md in the repo).\n    \n2. Set the `baseUrl` collection variable to your server address (default `http://localhost:3000`).\n    \n\n### Endpoints\n\n| Method | Endpoint | Description |\n| --- | --- | --- |\n| POST | `/companies` | Create a company |\n| GET | `/companies` | List all companies with their services |\n| POST | `/services` | Create a service under a company |\n| GET | `/services/:id` | Get service details by ID |\n\n### Status codes\n\n- **200** OK / **201** Created\n    \n- **400** Validation failed (response lists each invalid field)\n    \n- **404** Company or service not found\n    \n- **409** Registration number already exists\n    \n- **500** Internal server error",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "60186616",
+    "_collection_link": "https://go.postman.co/collection/60186616-ac890814-56b3-4c2d-80dd-4c3a887f1ca2?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get All Companies",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/companies",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "companies"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Get All Companies",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/companies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "companies"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "177"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"b1-CdvmQOzCoKJZNpwby50SG5+67cc\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 14 Nov 2026 12:16:27 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Vista Sdn Bhd\",\n    \"registrationNumber\": \"202301000123\",\n    \"services\": [\n      {\n        \"id\": 1,\n        \"companyId\": 1,\n        \"name\": \"Web Design\",\n        \"description\": \"Company website design\",\n        \"price\": 1500\n      }\n    ]\n  }\n]"
+        }
+      ]
+    },
+    {
+      "name": "Create Company",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Acme Sdn Bhd\",\r\n  \"registrationNumber\": \"202401000999\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/companies",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "companies"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Create Company",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Acme Sdn Bhd\",\r\n  \"registrationNumber\": \"202401000999\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/companies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "companies"
+              ]
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "53"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"35-dmFIW6r0dsU44d3w518ErDHFjpc\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 14 Nov 2026 12:49:22 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"message\": \"A record with this value already exists\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Create Service",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"companyId\": 1,\r\n  \"name\": \"Hosting\",\r\n  \"description\": \"Annual web hosting\",\r\n  \"price\": 300\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/services",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "services"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Create Service",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"companyId\": 1,\r\n  \"name\": \"Hosting\",\r\n  \"description\": \"Annual web hosting\",\r\n  \"price\": 300\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/services",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "services"
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "86"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"56-LI7s3jNqzAVdt0OTbtJTStQmzH4\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 14 Nov 2026 12:50:05 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"id\": 3,\n  \"companyId\": 1,\n  \"name\": \"Hosting\",\n  \"description\": \"Annual web hosting\",\n  \"price\": 300\n}"
+        }
+      ]
+    },
+    {
+      "name": "Create Service By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/services/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "services",
+            "1"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Create Service By ID",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/services/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "services",
+                "1"
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "172"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"ac-zEr4UVKbQHRSTkjts9tl6VSlikY\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 14 Nov 2026 12:51:50 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"id\": 1,\n  \"companyId\": 1,\n  \"name\": \"Web Design\",\n  \"description\": \"Company website design\",\n  \"price\": 1500,\n  \"company\": {\n    \"id\": 1,\n    \"name\": \"Vista Sdn Bhd\",\n    \"registrationNumber\": \"202301000123\"\n  }\n}"
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    }
+  ]
+}
