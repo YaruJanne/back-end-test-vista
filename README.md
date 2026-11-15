@@ -4,6 +4,8 @@ REST API for managing companies and their services.
 
 **Tech stack:** Node.js, TypeScript, Express 5, Prisma ORM (v6), MySQL, express-validator
 
+> **Quickest way to try it:** see [Quick start with Docker](#quick-start-with-docker-recommended-for-reviewers) — one command, no local MySQL needed.
+
 ## Requirements
 
 - Node.js 20+ and npm
@@ -112,7 +114,28 @@ src/
 └── middleware/       # Logger, validation, error handler
 ```
 
-## Docker
+## Quick start with Docker (recommended for reviewers)
+
+The fastest way to run the API — no local MySQL or Node.js needed, only [Docker Desktop](https://www.docker.com/products/docker-desktop/):
+
+```bash
+git clone https://github.com/YaruJanne/back-end-test-vista.git
+cd back-end-test-vista
+docker compose up --build
+```
+
+This starts **MySQL 8.4** and the **API**, creates the tables automatically (`prisma migrate deploy` runs on startup), and serves the API at `http://localhost:3000`.
+
+| Service | Address | Notes |
+|---|---|---|
+| API | `http://localhost:3000` | Try `GET /health` |
+| MySQL | `localhost:3307` | user `root`, password `root`, database `vista_test` |
+
+Stop with `Ctrl+C`, or `docker compose down` (add `-v` to also delete the database data).
+
+### Docker image only
+
+To run just the API container against your own MySQL:
 
 ```bash
 docker build -t vista-backend .
@@ -120,4 +143,3 @@ docker run -p 3000:3000 -e DATABASE_URL="mysql://root:password@host.docker.inter
 ```
 
 `host.docker.internal` lets the container reach MySQL running on your machine.
-The container runs `prisma migrate deploy` on startup.
